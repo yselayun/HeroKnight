@@ -6,8 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float _speed = 50f, _maxSpeed = 3;
-    public bool _falled = true, _grounded = false, _faceRight = true;
+    public float _speed = 500f, _maxSpeed = 90, _powJump = 5000f;
+    public bool _falled = true, _grounded = false, _faceRight = true, _doubleJump = false;
     public Animator _anim;
 
     public Rigidbody2D rigidbody2D;
@@ -24,6 +24,16 @@ public class Player : MonoBehaviour
         _anim.SetBool("Falled", _falled);
         _anim.SetBool("Grounded", _grounded);
         _anim.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (_grounded                                                                                                                                                                   )
+            {
+                _falled = false;
+                _grounded = false;
+                rigidbody2D.AddForce(Vector2.up * _powJump);
+                _falled = true;
+            }
+        }
 
     }
     void FixedUpdate()
