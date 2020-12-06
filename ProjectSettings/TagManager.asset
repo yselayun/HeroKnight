@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Ground
   - 
   - 
   - 
@@ -41,6 +41,15 @@ TagManager:
   - name: BackGround
     uniqueID: 2761571467
     locked: 0
+  - name: Wall
+    uniqueID: 1969098623
+    locked: 0
+  - name: Ground
+    uniqueID: 4008014181
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 65119257
     locked: 0
