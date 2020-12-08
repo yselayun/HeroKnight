@@ -15,8 +15,8 @@ TagManager:
   - 
   - Ground
   - Wall
-  - 
-  - 
+  - Player
+  - Fog
   - 
   - 
   - 
@@ -38,17 +38,44 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
   - name: BackGround
     uniqueID: 2761571467
     locked: 0
-  - name: Wall
-    uniqueID: 1969098623
+  - name: Ground_Back_3
+    uniqueID: 1374526363
+    locked: 0
+  - name: Ground_Back_2
+    uniqueID: 1542201
+    locked: 0
+  - name: Fog_Back_2
+    uniqueID: 3853281349
+    locked: 0
+  - name: Ground_Back_1
+    uniqueID: 2790683901
+    locked: 0
+  - name: Tree
+    uniqueID: 3273879465
+    locked: 0
+  - name: Fog_Back_1
+    uniqueID: 3944206951
     locked: 0
   - name: Ground
     uniqueID: 4008014181
     locked: 0
-  - name: Default
-    uniqueID: 0
+  - name: Wall
+    uniqueID: 1969098623
+    locked: 0
+  - name: Ground_Front_1
+    uniqueID: 2017981803
+    locked: 0
+  - name: Fog_Front_1
+    uniqueID: 3099475293
+    locked: 0
+  - name: Ground_Front_2
+    uniqueID: 680347439
     locked: 0
   - name: Player
     uniqueID: 65119257
