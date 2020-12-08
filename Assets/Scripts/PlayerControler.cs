@@ -252,4 +252,5 @@ public class PlayerControler : MonoBehaviour
 
         Gizmos.DrawLine(WallCheck.position, new Vector3(WallCheck.position.x + wallCheckDistance, WallCheck.position.y, WallCheck.position.z));
     }
+
 }
