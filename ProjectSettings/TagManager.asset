@@ -59,6 +59,9 @@ TagManager:
   - name: Tree
     uniqueID: 3273879465
     locked: 0
+  - name: Gate_Left
+    uniqueID: 3855118641
+    locked: 0
   - name: Fog_Back_1
     uniqueID: 3944206951
     locked: 0
@@ -79,4 +82,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 65119257
+    locked: 0
+  - name: Gate_Right
+    uniqueID: 3925196635
     locked: 0
