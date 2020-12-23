@@ -83,6 +83,9 @@ TagManager:
   - name: Player
     uniqueID: 65119257
     locked: 0
+  - name: Goblin
+    uniqueID: 2322257335
+    locked: 0
   - name: Gate_Right
     uniqueID: 3925196635
     locked: 0
