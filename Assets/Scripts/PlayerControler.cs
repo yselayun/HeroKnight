@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerControler : MonoBehaviour
 {
     private float movementInputDirection; //lay dau vao dieu huong di chuyen
+    private float turnTimer;
+    private float dashTimeLeft;
+    private float lastImageXpos;
+    private float lastDash = -100f;
 
     public int amountOfJump;
     public int facingDirection = 1;
@@ -16,7 +20,10 @@ public class PlayerControler : MonoBehaviour
     public bool isTouchingWall;
     public bool canJump;
     public bool jumpInput = false;
+    public bool canMove = true;
+    public bool canFlip = true;
     public bool isWallSliding;
+    public bool isDashing;
 
     private Rigidbody2D rigidbody2d; //
     private Animator anim;
@@ -32,6 +39,11 @@ public class PlayerControler : MonoBehaviour
     public float airDragMultiplier = 10.0f;
     public float wallHopForce = 100.0f;
     public float wallJumpForce = 200.0f;
+    public float turnTimerSet = 0.1f;
+    //public float dashTime = 0.2f;
+    //public float dashSpeed = 350f;
+    //public float distanceBetweenImage = 100f;
+    //public float dashCoolDown = 2.5f;
 
     public Vector2 wallHopDirection;  
     public Vector2 wallJumpDirection;
@@ -60,7 +72,7 @@ public class PlayerControler : MonoBehaviour
         UpdateAnimations();
         checkIfCanJump();
         checkIfWallSliding();
-
+        //CheckDash();
 
         //  Debug.Log(rigidbody2d.velocity.y < 0 );
 
@@ -90,7 +102,68 @@ public class PlayerControler : MonoBehaviour
             jumpInput = false;
 
         }
+        //if(Input.GetKeyDown("Horizontal") && isTouchingWall)
+        //{
+        //    if(!isGrounded && movementInputDirection != facingDirection)
+        //    {
+        //        canMove = false;
+        //        canFlip = false;
+        //        turnTimer = turnTimerSet;
+        //    }
+        //}
+        //if (!canMove)
+        //{
+        //    turnTimer -= Time.deltaTime;
+        //    if(turnTimer <= 0)
+        //    {
+        //        canMove = true;
+        //        canFlip = true;
+        //    }
+        //}
+        //if (Input.GetButtonDown("Dash"))
+        //{
+        //    isRunning = false;
+        //    if(Time.time >= (lastDash + dashCoolDown))
+        //        AttemptToDash();
+        //}
     }
+    //private void AttemptToDash()
+    //{
+    //    isDashing = true;
+    //    dashTimeLeft = dashTime;
+    //    lastDash = Time.time;
+    //
+    //    PlayerAfterImagePool.Instance.GetFromPool();
+    //    lastImageXpos = transform.position.x;
+    //}
+
+    //
+
+    //private void CheckDash()
+    //{
+    //    if (isDashing)
+    //    {
+    //       if(dashTimeLeft > 0)
+    //        {
+    //            canMove = false;
+    //            canFlip = false;
+    //            rigidbody2d.velocity = new Vector2(dashSpeed * facingDirection, rigidbody2d.velocity.y);
+    //            dashTimeLeft -= Time.deltaTime;
+    //
+    //            if (Mathf.Abs(transform.position.x - lastImageXpos) > distanceBetweenImage)
+    //            {
+    //                PlayerAfterImagePool.Instance.GetFromPool();
+    //                lastImageXpos = transform.position.x;
+    //            }
+    //        }
+    //       else if(dashTimeLeft <= 0 || isTouchingWall)
+    //        {
+    //            isDashing = false;
+    //            canMove = true;
+    //            canFlip = true;
+    //        }
+    //    }
+    //}
     //
     private void checkIfWallSliding()
     {
@@ -115,15 +188,16 @@ public class PlayerControler : MonoBehaviour
             Flip();
         }
 
-        if (rigidbody2d.velocity.x != 0)
+
+        if (Mathf.Abs(rigidbody2d.velocity.x) >= 0.01f) 
         {
             isRunning = true;
-
+        
         }
         else if (rigidbody2d.velocity.x == 0)
         {
             isRunning = false;
-
+        
         }
     }
 
@@ -151,8 +225,10 @@ public class PlayerControler : MonoBehaviour
     }
     private void ApplyMovement() //
     {
+
         
-         rigidbody2d.velocity = new Vector2(_speed * movementInputDirection, rigidbody2d.velocity.y);
+            rigidbody2d.velocity = new Vector2(_speed * movementInputDirection, rigidbody2d.velocity.y);
+        
         
         if(!isGrounded && !isWallSliding && movementInputDirection != 0)
         {
@@ -210,6 +286,16 @@ public class PlayerControler : MonoBehaviour
         anim.SetFloat("yVelocity", rigidbody2d.velocity.y);
         anim.SetBool("isWallSliding", isWallSliding);
     }
+
+    private void disableFlip()
+    {
+        canFlip = false;
+    }
+
+    private void enableFlip()
+    {
+        canFlip = true;
+    }
     public void Flip()
     {
 
@@ -240,12 +326,13 @@ public class PlayerControler : MonoBehaviour
             WallCheck.localPosition = direction;
         }
 
-        if (!isWallSliding)
+        if (!isWallSliding && canFlip)
         {
             facingDirection *= -1;
         }
     }
     //
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(GroundCheck.position, groundCheckRadius);
