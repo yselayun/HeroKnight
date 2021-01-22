@@ -21,10 +21,15 @@ public class PlayerCombatController : MonoBehaviour
 
     private Animator anim;
 
+    private PlayerControler pc;
+
+    private PlayerStats ps;
     private void Start()
     {
         anim = GetComponent<Animator>();
         anim.SetBool("canAttack", combatEnabled);
+        pc = GetComponent<PlayerControler>();
+        ps = GetComponent<PlayerStats>();
 
         
     }
@@ -92,8 +97,21 @@ public class PlayerCombatController : MonoBehaviour
         anim.SetBool("isAttacking", isAttacking);
         anim.SetBool("attack1", false);
     }
-    
 
+    private void Damage(float[] attackDetails)
+    {
+        int direction;
+        ps.DecreaseHealth(attackDetails[0]);
+        if (attackDetails[1] < transform.position.x)
+        {
+            direction = 1;
+        }
+        else
+        {
+            direction = -1;
+        }
+        pc.KnockBack(direction);
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(attack1HitBoxPos.position, attack1Radius);

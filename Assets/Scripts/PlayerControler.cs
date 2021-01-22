@@ -9,6 +9,9 @@ public class PlayerControler : MonoBehaviour
     private float dashTimeLeft;
     private float lastImageXpos;
     private float lastDash = -100f;
+    private float knockbackStartTime;
+    [SerializeField]
+    private float knockbackDuration;
 
     public int amountOfJump;
     public int facingDirection = 1;
@@ -24,6 +27,11 @@ public class PlayerControler : MonoBehaviour
     public bool canFlip = true;
     public bool isWallSliding;
     public bool isDashing;
+    private bool knockback;
+
+    [SerializeField]
+    private Vector2 knockbackSpeed;
+
 
     private Rigidbody2D rigidbody2d; //
     private Animator anim;
@@ -73,6 +81,7 @@ public class PlayerControler : MonoBehaviour
         checkIfCanJump();
         checkIfWallSliding();
         //CheckDash();
+        checkKnockback();
 
         //  Debug.Log(rigidbody2d.velocity.y < 0 );
 
@@ -227,10 +236,10 @@ public class PlayerControler : MonoBehaviour
     {
 
         
-            rigidbody2d.velocity = new Vector2(_speed * movementInputDirection, rigidbody2d.velocity.y);
+         rigidbody2d.velocity = new Vector2(_speed * movementInputDirection, rigidbody2d.velocity.y);
         
         
-        if(!isGrounded && !isWallSliding && movementInputDirection != 0)
+        if(!isGrounded && !isWallSliding && movementInputDirection != 0 && !knockback)
         {
             Vector2 addToForce = new Vector2(movementSpeedInAir * movementInputDirection, 0);
             rigidbody2d.AddForce(addToForce);
@@ -240,7 +249,7 @@ public class PlayerControler : MonoBehaviour
                 rigidbody2d.velocity = new Vector2(_speed * movementInputDirection, rigidbody2d.velocity.y);
             }
         }
-        else if(!isGrounded && !isWallSliding && movementInputDirection == 0)
+        else if(!isGrounded && !isWallSliding && movementInputDirection == 0 && !knockback)
         {
             rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x * airDragMultiplier, rigidbody2d.velocity.y);
         }
@@ -333,6 +342,25 @@ public class PlayerControler : MonoBehaviour
     }
     //
 
+    public void KnockBack(int direction)
+    {
+        knockback = true;
+        knockbackStartTime = Time.time;
+        rigidbody2d.velocity = new Vector2(knockbackSpeed.x * direction, knockbackSpeed.y);
+        anim.SetBool("knockback", knockback);
+    }
+
+    private void checkKnockback()
+    {
+        if(Time.time >= knockbackStartTime + knockbackDuration && knockback)
+        {
+            knockback = false;
+            rigidbody2d.velocity = new Vector2(0.0f, rigidbody2d.velocity.y);
+        }
+    }
+
+
+ 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(GroundCheck.position, groundCheckRadius);

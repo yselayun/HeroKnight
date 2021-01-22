@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 3693973709847502653}
   - component: {fileID: 7968888620461318040}
   - component: {fileID: 6278259544806774892}
+  - component: {fileID: 4635525511673638036}
   m_Layer: 0
   m_Name: HeroKnight
   m_TagString: Player
@@ -257,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c2a3264b9436e4392930ceb3610478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDuration: 0
   amountOfJump: 0
   facingDirection: 1
   isFacingRight: 1
@@ -270,6 +272,7 @@ MonoBehaviour:
   canFlip: 1
   isWallSliding: 0
   isDashing: 0
+  knockbackSpeed: {x: 0, y: 0}
   inputJumpCounter: 2
   _speed: 100
   _jumpForce: 180
@@ -288,6 +291,23 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &4635525511673638036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278259544806774893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e9223a406945d04b8569f0daa949df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  deathChunkParticle: {fileID: 468830050256214025, guid: c6c71a246bf342042835a880304f191f,
+    type: 3}
+  deathBloodParticle: {fileID: 7364441075787299493, guid: 95b54f39beedbf94f98ade4f06046028,
+    type: 3}
 --- !u!1 &8152250682907975278
 GameObject:
   m_ObjectHideFlags: 0
